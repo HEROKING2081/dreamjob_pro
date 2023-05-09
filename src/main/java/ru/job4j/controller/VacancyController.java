@@ -2,10 +2,14 @@ package ru.job4j.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import ru.job4j.model.Vacancy;
 import ru.job4j.repository.MemoryVacancyRepository;
 import ru.job4j.repository.VacancyRepository;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping("/vacancies")
@@ -17,5 +21,47 @@ public class VacancyController {
     public String getAll(Model model) {
         model.addAttribute("vacancies", vacancyRepository.findAll());
         return "vacancies/list";
+    }
+
+    @GetMapping("/create")
+    public String getCreationPage() {
+        return "vacancies/create";
+    }
+
+    @PostMapping("/create")
+    public String create(@ModelAttribute Vacancy vacancy) {
+        vacancyRepository.save(vacancy);
+        return "redirect:/vacancies";
+    }
+
+    @GetMapping("/{id}")
+    public String getByID(Model model, @PathVariable int id) {
+        var vacancyOptional = vacancyRepository.findByID(id);
+        if (vacancyOptional.isEmpty()) {
+            model.addAttribute("message", "Вакансия с указанным идентификатором не найдена");
+            return "errors/404";
+        }
+        model.addAttribute("vacancy", vacancyOptional.get());
+        return "vacancies/one";
+    }
+
+    @PostMapping("/update")
+    public String update(@ModelAttribute Vacancy vacancy, Model model) {
+        var isUpdated = vacancyRepository.update(vacancy);
+        if (!isUpdated) {
+            model.addAttribute("message", "Вакансия с указанным идентификатором не найдена");
+            return "errors/404";
+        }
+        return "redirect:/vacancies";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(Model model, @PathVariable int id) {
+        var isDeleted = vacancyRepository.deleteByID(id);
+        if (!isDeleted) {
+            model.addAttribute("message", "Вакансия с указанным идентификатором не найдена");
+            return "errors/404";
+        }
+        return "redirect:/vacancies";
     }
 }
