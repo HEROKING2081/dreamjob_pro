@@ -13,13 +13,23 @@ public class Vacancy {
 
     private LocalDateTime creationDate = LocalDateTime.now();
 
-    public Vacancy() {}
+    private boolean visible;
 
-    public Vacancy(int id, String title, String description, LocalDateTime creationDate) {
+    private int cityID;
+
+    private int fileId;
+
+    public Vacancy() { }
+
+    public Vacancy(int id, String title, String description, LocalDateTime creationDate,
+                   boolean visible, int cityID, int fileId) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.creationDate = creationDate;
+        this.visible = visible;
+        this.cityID = cityID;
+        this.fileId = fileId;
     }
 
     public int getId() {
@@ -52,6 +62,30 @@ public class Vacancy {
 
     public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public boolean getVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    public int getCityID() {
+        return cityID;
+    }
+
+    public void setCityID(int cityId) {
+        this.cityID = cityId;
+    }
+
+    public int getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(int fileId) {
+        this.fileId = fileId;
     }
 
     @Override

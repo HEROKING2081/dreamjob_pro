@@ -13,13 +13,23 @@ public class Candidate {
 
     private LocalDateTime creationDate = LocalDateTime.now();
 
-    public Candidate() {}
+    private boolean visible;
 
-    public Candidate(int id, String name, String description, LocalDateTime creationDate) {
+    private int cityID;
+
+    private int fileID;
+
+    public Candidate() { }
+
+    public Candidate(int id, String name, String description, LocalDateTime creationDate,
+                     boolean visible, int cityID, int fileID) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.creationDate = creationDate;
+        this.visible = visible;
+        this.cityID = cityID;
+        this.fileID = fileID;
     }
 
     public int getId() {
@@ -52,6 +62,30 @@ public class Candidate {
 
     public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public boolean getVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    public int getCityID() {
+        return cityID;
+    }
+
+    public void setCityID(int cityID) {
+        this.cityID = cityID;
+    }
+
+    public int getFileID() {
+        return fileID;
+    }
+
+    public void setFileID(int fileID) {
+        this.fileID = fileID;
     }
 
     @Override
